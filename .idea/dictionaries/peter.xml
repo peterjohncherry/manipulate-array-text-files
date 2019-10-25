@@ -3,6 +3,8 @@
     <words>
       <w>datatype</w>
       <w>filepath</w>
+      <w>outname</w>
+      <w>outpath</w>
       <w>vdot</w>
     </words>
   </dictionary>

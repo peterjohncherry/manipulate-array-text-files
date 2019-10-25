@@ -116,11 +116,13 @@ print("datatype = ", datatype)
 print(type(datatype))
 
 arr_out = manipulate_txt_arrays(filepath1, filepath2, op, datatype)
-if op != "dot":
-    print("\n output can be found in", target_directory+"arr_out.txt")
-
-#out_name = target_directory+args.filename1+"_"+op+"_"args.filen
-np.savetxt(target_directory+"arr_out.txt", arr_out)
+if op != ("dot" or "vdot"):
+    out_name = str(args.filename1).replace('.txt',op) + str(args.filename2)
+    out_path = target_directory+out_name
+    print("\n output can be found in", out_path)
+    np.savetxt(out_path, arr_out)
+else:
+    print (op + " product = ", arr_out)
 
 print_max = True
 print_min = True
