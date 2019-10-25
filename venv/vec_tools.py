@@ -25,9 +25,6 @@ def clean_file(filepath):
         f.write(newtxtarr)
 
 
-
-
-
 def manipulate_txt_arrays(filename1, filename2, op, datatype):
     print("datatype = ", datatype, type(datatype))
     arr1 = np.loadtxt(filename1, dtype=datatype)
@@ -45,8 +42,10 @@ def manipulate_txt_arrays(filename1, filename2, op, datatype):
         return arr1 + arr2
     elif op == "-":
         return arr1 - arr2
-    elif op == "-" :
-        return arr1 - arr2
+    elif op == "dot" :
+        return np.dot(arr1,arr2)
+    elif op == "vdot" :
+        return np.vdot(arr1,arr2)
     else :
         sys.exit("operation \"" +op+ "\" is not defined, aborting!")
 
@@ -85,6 +84,7 @@ parser.add_argument('--op',
                     type=str,
                     dest='op',
                     default='-',
+                    choices=['+','-','dot','vdot'],
                     help="operation to perform between f1 and f2")
 
 parser.add_argument('--datatype',
@@ -114,8 +114,6 @@ print("op = ", op)
 datatype = set_datatype(str(args.datatype_str))
 print("datatype = ", datatype)
 print(type(datatype))
-
-
 
 arr_out = manipulate_txt_arrays(filepath1, filepath2, op, datatype)
 if op != "dot":
