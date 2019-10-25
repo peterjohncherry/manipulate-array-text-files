@@ -3,6 +3,8 @@ import argparse
 import sys
 import os
 
+
+
 def set_datatype(datatype_str):
     if datatype_str == "complex128":
         return np.complex128
@@ -15,10 +17,21 @@ def set_datatype(datatype_str):
     else :
         sys.exit("datatype \""+ datatype_str + "\" is not recognized, aborting!")
 
+def clean_file(filepath):
+    with open(filepath) as f:
+        newtxtarr = f.read().replace('+-', '-')
 
-def manipulate_txt_arrays(filename1, filename2, op, data_type=np.complex128):
-    arr1 = np.loadtxt(filename1,data_type)
-    arr2 = np.loadtxt(filename2,data_type)
+    with open(filepath, "w") as f:
+        f.write(newtxtarr)
+
+
+
+
+
+def manipulate_txt_arrays(filename1, filename2, op, datatype):
+    print("datatype = ", datatype, type(datatype))
+    arr1 = np.loadtxt(filename1, dtype=datatype)
+    arr2 = np.loadtxt(filename2, dtype=datatype)
     if arr1.shape != arr2.shape :
         print ("arr1.shape = ", arr1.shape)
         print ("arr2.shape = ", arr2.shape)
@@ -89,15 +102,20 @@ print("target_directory = ", target_directory)
 
 filepath1 = target_directory+str(args.filename1)
 print("filepath1 = ", filepath1)
+clean_file(filepath1)
 
 filepath2 = target_directory+str(args.filename2)
 print("filepath2 = ", filepath2)
+clean_file(filepath2)
 
 op = str(args.op)
 print("op = ", op)
 
 datatype = set_datatype(str(args.datatype_str))
 print("datatype = ", datatype)
+print(type(datatype))
+
+
 
 arr_out = manipulate_txt_arrays(filepath1, filepath2, op, datatype)
 if op != "dot":
